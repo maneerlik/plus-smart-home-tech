@@ -25,7 +25,7 @@ public class DeviceAddedEventHandler extends BaseHubEventHandler<DeviceAddedEven
         DeviceAddedEvent deviceAddedEvent = (DeviceAddedEvent) event;
         return DeviceAddedEventAvro.newBuilder()
                 .setId(deviceAddedEvent.getId())
-                .setType(DeviceTypeAvro.valueOf(deviceAddedEvent.getType().name()))
+                .setType(DeviceTypeAvro.valueOf(deviceAddedEvent.getDeviceType().name()))
                 .build();
     }
 }

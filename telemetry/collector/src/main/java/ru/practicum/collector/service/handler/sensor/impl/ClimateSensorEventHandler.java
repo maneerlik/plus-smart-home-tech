@@ -23,7 +23,7 @@ public class ClimateSensorEventHandler extends BaseSensorEventHandler<ClimateSen
     protected ClimateSensorAvro mapToAvro(SensorEvent event) {
         ClimateSensorEvent climateSensorEvent = (ClimateSensorEvent) event;
         return ClimateSensorAvro.newBuilder()
-                .setCo2Level(climateSensorEvent.getCo2level())
+                .setCo2Level(climateSensorEvent.getCo2Level())
                 .setHumidity(climateSensorEvent.getHumidity())
                 .setTemperatureC(climateSensorEvent.getTemperatureC())
                 .build();

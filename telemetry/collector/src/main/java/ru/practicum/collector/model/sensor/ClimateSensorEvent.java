@@ -13,5 +13,5 @@ import lombok.experimental.FieldDefaults;
 public class ClimateSensorEvent extends SensorEvent {
     int temperatureC;
     int humidity;
-    int co2level;
+    int co2Level;
 }
