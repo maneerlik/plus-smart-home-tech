@@ -4,6 +4,6 @@ import ru.practicum.collector.model.hub.HubEvent;
 import ru.practicum.collector.model.hub.enums.HubEventType;
 
 public interface HubEventHandler {
-    HubEventType getMessageType();
+    HubEventType getEventType();
     void handle(HubEvent event);
 }

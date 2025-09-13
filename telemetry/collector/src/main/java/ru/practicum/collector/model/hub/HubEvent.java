@@ -15,8 +15,7 @@ import java.time.Instant;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "type",
-        defaultImpl = HubEvent.class
+        property = "type"
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = DeviceAddedEvent.class, name = "DEVICE_ADDED"),
@@ -27,7 +26,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-public abstract class HubEvent {
+public class HubEvent {
     @NotBlank
     private String hubId;
 
@@ -35,5 +34,20 @@ public abstract class HubEvent {
     private Instant timestamp;
 
 
-    public abstract HubEventType getType();
+    public final HubEventType getType() {
+        String simpleName = this.getClass().getSimpleName();
+        simpleName = simpleName.substring(0, simpleName.length() - "Event".length());
+        String snakeCaseName = toSnakeCase(simpleName);
+
+        try {
+            return HubEventType.valueOf(snakeCaseName);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("Cannot map event class '" + this.getClass().getName() +
+                    "' to SensorEventType. Expected enum name: " + snakeCaseName, e);
+        }
+    }
+
+    private static String toSnakeCase(String s) {
+        return s.replaceAll("([A-Z])", "_$1").replaceAll("^_", "").toUpperCase();
+    }
 }

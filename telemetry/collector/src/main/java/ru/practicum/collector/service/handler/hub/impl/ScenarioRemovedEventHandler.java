@@ -10,14 +10,9 @@ import ru.yandex.practicum.kafka.telemetry.event.ScenarioRemovedEventAvro;
 @Component
 public class ScenarioRemovedEventHandler extends BaseHubEventHandler<ScenarioRemovedEventAvro> {
     public ScenarioRemovedEventHandler(EventProducer eventProducer) {
-        super(eventProducer);
+        super(eventProducer, HubEventType.SCENARIO_REMOVED);
     }
 
-
-    @Override
-    public HubEventType getMessageType() {
-        return HubEventType.SCENARIO_REMOVED;
-    }
 
     @Override
     public void handle(HubEvent event) {

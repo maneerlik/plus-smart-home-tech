@@ -10,14 +10,9 @@ import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
 @Component
 public class ClimateSensorEventHandler extends BaseSensorEventHandler<ClimateSensorAvro> {
     public ClimateSensorEventHandler(EventProducer eventProducer) {
-        super(eventProducer);
+        super(eventProducer, SensorEventType.CLIMATE_SENSOR_EVENT);
     }
 
-
-    @Override
-    public SensorEventType getMessageType() {
-        return SensorEventType.CLIMATE_SENSOR_EVENT;
-    }
 
     @Override
     public void handle(SensorEvent event) {

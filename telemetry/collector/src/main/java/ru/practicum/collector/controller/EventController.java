@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Validated
 @RestController
 @RequestMapping(path = "/events", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -30,33 +32,29 @@ public class EventController {
             List<HubEventHandler> hubEventHandlers
     ) {
         this.sensorEventHandlers = sensorEventHandlers.stream()
-                .collect(Collectors.toMap(SensorEventHandler::getMessageType, Function.identity()));
+                .collect(Collectors.toMap(SensorEventHandler::getEventType, Function.identity()));
         this.hubEventHandlers = hubEventHandlers.stream()
-                .collect(Collectors.toMap(HubEventHandler::getMessageType, Function.identity()));
+                .collect(Collectors.toMap(HubEventHandler::getEventType, Function.identity()));
     }
 
 
     @PostMapping("/sensors")
     @ResponseStatus(HttpStatus.OK)
     public void addSensorEvent(@Valid @RequestBody SensorEvent sensorEvent) {
-        SensorEventType type = sensorEvent.getType();
-        SensorEventHandler handler = sensorEventHandlers.get(type);
-        if (handler != null) {
-            handler.handle(sensorEvent);
-        } else {
-            throw new UnknownEventTypeException("Unknown sensor event type: " + type);
-        }
+        SensorEventType eventType = sensorEvent.getType();
+        SensorEventHandler handler = sensorEventHandlers.get(eventType);
+
+        if (isNull(handler)) throw new UnknownEventTypeException("Unknown sensor event type: " + eventType);
+        handler.handle(sensorEvent);
     }
 
     @PostMapping("/hubs")
     @ResponseStatus(HttpStatus.OK)
     public void addHubEvent(@Valid @RequestBody HubEvent hubEvent) {
-        HubEventType type = hubEvent.getType();
-        HubEventHandler handler = hubEventHandlers.get(type);
-        if (handler != null) {
-            handler.handle(hubEvent);
-        } else {
-            throw new UnknownEventTypeException("Unknown hub event type: " + type);
-        }
+        HubEventType eventType = hubEvent.getType();
+        HubEventHandler handler = hubEventHandlers.get(eventType);
+
+        if (isNull(handler)) throw new UnknownEventTypeException("Unknown hub event type: " + eventType);
+        handler.handle(hubEvent);
     }
 }

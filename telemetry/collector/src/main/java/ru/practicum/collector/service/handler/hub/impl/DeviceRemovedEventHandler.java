@@ -10,14 +10,9 @@ import ru.yandex.practicum.kafka.telemetry.event.DeviceRemovedEventAvro;
 @Component
 public class DeviceRemovedEventHandler extends BaseHubEventHandler<DeviceRemovedEventAvro> {
     public DeviceRemovedEventHandler(EventProducer eventProducer) {
-        super(eventProducer);
+        super(eventProducer, HubEventType.DEVICE_REMOVED);
     }
 
-
-    @Override
-    public HubEventType getMessageType() {
-        return HubEventType.DEVICE_REMOVED;
-    }
 
     @Override
     public void handle(HubEvent event) {

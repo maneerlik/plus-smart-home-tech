@@ -4,6 +4,6 @@ import ru.practicum.collector.model.sensor.SensorEvent;
 import ru.practicum.collector.model.sensor.SensorEventType;
 
 public interface SensorEventHandler {
-    SensorEventType getMessageType();
+    SensorEventType getEventType();
     void handle(SensorEvent event);
 }

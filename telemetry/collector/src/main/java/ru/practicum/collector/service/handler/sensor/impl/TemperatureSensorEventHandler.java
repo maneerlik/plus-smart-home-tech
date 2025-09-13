@@ -10,14 +10,9 @@ import ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro;
 @Component
 public class TemperatureSensorEventHandler extends BaseSensorEventHandler<TemperatureSensorAvro> {
     public TemperatureSensorEventHandler(EventProducer eventProducer) {
-        super(eventProducer);
+        super(eventProducer, SensorEventType.TEMPERATURE_SENSOR_EVENT);
     }
 
-
-    @Override
-    public SensorEventType getMessageType() {
-        return SensorEventType.TEMPERATURE_SENSOR_EVENT;
-    }
 
     @Override
     public void handle(SensorEvent event) {

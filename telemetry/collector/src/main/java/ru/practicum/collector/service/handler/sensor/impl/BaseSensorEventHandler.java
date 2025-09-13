@@ -3,13 +3,15 @@ package ru.practicum.collector.service.handler.sensor.impl;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import ru.practicum.collector.model.sensor.SensorEvent;
-import ru.practicum.collector.service.handler.sensor.SensorEventHandler;
+import ru.practicum.collector.model.sensor.SensorEventType;
 import ru.practicum.collector.service.handler.EventProducer;
+import ru.practicum.collector.service.handler.sensor.SensorEventHandler;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 
 @RequiredArgsConstructor
 public abstract class BaseSensorEventHandler<T extends SpecificRecordBase> implements SensorEventHandler {
     protected final EventProducer eventProducer;
+    protected final SensorEventType sensorEventType;
 
 
     protected SensorEventAvro mapToSensorEventAvro(SensorEvent event) {
@@ -22,4 +24,9 @@ public abstract class BaseSensorEventHandler<T extends SpecificRecordBase> imple
     }
 
     protected abstract T mapToAvro(SensorEvent event);
+
+    @Override
+    public final SensorEventType getEventType() {
+        return sensorEventType;
+    }
 }

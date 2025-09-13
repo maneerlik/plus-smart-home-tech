@@ -16,8 +16,7 @@ import java.time.Instant;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "type",
-        defaultImpl = SensorEvent.class
+        property = "type"
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ClimateSensorEvent.class, name = "CLIMATE_SENSOR_EVENT"),
@@ -41,5 +40,19 @@ public abstract class SensorEvent {
     Instant timestamp = Instant.now();
 
 
-    public abstract SensorEventType getType();
+    public final SensorEventType getType() {
+        String simpleName = this.getClass().getSimpleName();
+        String snakeCaseName = toSnakeCase(simpleName);
+
+        try {
+            return SensorEventType.valueOf(snakeCaseName);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("Cannot map event class '" + this.getClass().getName() +
+                    "' to SensorEventType. Expected enum name: " + snakeCaseName, e);
+        }
+    }
+
+    private static String toSnakeCase(String s) {
+        return s.replaceAll("([A-Z])", "_$1").replaceAll("^_", "").toUpperCase();
+    }
 }

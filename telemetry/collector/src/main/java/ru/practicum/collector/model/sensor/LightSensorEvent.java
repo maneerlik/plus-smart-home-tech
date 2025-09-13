@@ -13,10 +13,4 @@ import lombok.experimental.FieldDefaults;
 public class LightSensorEvent extends SensorEvent {
     int linkQuality;
     int luminosity;
-
-
-    @Override
-    public SensorEventType getType() {
-        return SensorEventType.LIGHT_SENSOR_EVENT;
-    }
 }

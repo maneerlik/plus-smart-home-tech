@@ -13,15 +13,10 @@ public class ScenarioAddedEventHandler extends BaseHubEventHandler<ScenarioAdded
     private final AvroMapper mapper;
 
     public ScenarioAddedEventHandler(EventProducer eventProducer, AvroMapper mapper) {
-        super(eventProducer);
+        super(eventProducer, HubEventType.SCENARIO_ADDED);
         this.mapper = mapper;
     }
 
-
-    @Override
-    public HubEventType getMessageType() {
-        return HubEventType.SCENARIO_ADDED;
-    }
 
     @Override
     public void handle(HubEvent event) {

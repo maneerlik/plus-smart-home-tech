@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.collector.model.hub.enums.HubEventType;
 
 import java.util.List;
 
@@ -29,10 +28,4 @@ public class ScenarioAddedEvent extends HubEvent {
     @NotEmpty
     @Valid
     List<DeviceAction> actions;
-
-
-    @Override
-    public HubEventType getType() {
-        return HubEventType.SCENARIO_ADDED;
-    }
 }
