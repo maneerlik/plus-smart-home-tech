@@ -1,4 +1,176 @@
+/**
+ * Протокол событий управления хабом и сценариями в формате Avro
+ *
+ * <p>Определяет структуры данных для управления устройствами, сценариями автоматизации
+ * и соответствующими событиями хаба</p>
+ *
+ * <h2>Пперечисления:</h2>
+ * <ul>
+ *   <li>{@link DeviceTypeAvro} - типы поддерживаемых устройств</li>
+ *   <li>{@link ConditionTypeAvro} - типы условий для сценариев</li>
+ *   <li>{@link ConditionOperationAvro} - операции сравнения для условий</li>
+ *   <li>{@link ActionTypeAvro} - типы действий для сценариев</li>
+ * </ul>
+ *
+ * <h2>События устройств:</h2>
+ * <ul>
+ *   <li>{@link DeviceAddedEventAvro} - добавление нового устройства</li>
+ *   <li>{@link DeviceRemovedEventAvro} - удаление устройства</li>
+ * </ul>
+ *
+ * <h2>Компоненты сценариев:</h2>
+ * <ul>
+ *   <li>{@link ScenarioConditionAvro} - условие для активации сценария</li>
+ *   <li>{@link DeviceActionAvro} - действие, выполняемое сценарием</li>
+ * </ul>
+ *
+ * <h2>События сценариев:</h2>
+ * <ul>
+ *   <li>{@link ScenarioAddedEventAvro} - добавление нового сценария</li>
+ *   <li>{@link ScenarioRemovedEventAvro} - удаление сценария</li>
+ * </ul>
+ *
+ * <h2>Основная структура:</h2>
+ * <p>{@link HubEventAvro} - обёртка для событий хаба, содержащая:
+ * <ul>
+ *   <li>Идентификатор хаба</li>
+ *   <li>Метку времени события</li>
+ *   <li>Полезную нагрузку одного из типов событий</li>
+ * </ul>
+ */
+
 @namespace("ru.yandex.practicum.kafka.telemetry.event")
 protocol HubEventProtocol {
 
+	/**
+     * Типы поддерживаемых устройств
+     */
+	enum DeviceTypeAvro {
+		MOTION_SENSOR,			// Датчик движения
+		TEMPERATURE_SENSOR,		// Датчик температуры
+		LIGHT_SENSOR,			// Датчик освещенности
+		CLIMATE_SENSOR,			// Климатический датчик
+		SWITCH_SENSOR			// Датчик переключателя
+	}
+
+	/**
+ 	 * Типы условий для сценариев автоматизации
+ 	 */
+	enum ConditionTypeAvro {
+		MOTION,         		// Обнаружение движения
+		LUMINOSITY,     		// Уровень освещенности
+		SWITCH,         		// Состояние переключателя
+		TEMPERATURE,    		// Температура
+		CO2LEVEL,       		// Уровень CO2
+		HUMIDITY        		// Влажность
+	}
+
+	/**
+	 * Операции сравнения для условий сценариев
+	 */
+	enum ConditionOperationAvro {
+		EQUALS,         		// Равно
+		GREATER_THAN,   		// Больше чем
+		LOWER_THAN      		// Меньше чем
+	}
+
+	/**
+     * Типы действий для сценариев автоматизации
+     */
+	enum ActionTypeAvro {
+		ACTIVATE,       		// Активировать устройство
+		DEACTIVATE,     		// Деактивировать устройство
+		INVERSE,        		// Инвертировать состояние
+		SET_VALUE       		// Установить значение
+	}
+
+	/**
+     * Событие добавления нового устройства
+     *
+     * @param id идентификатор устройства
+     * @param type тип устройства
+     */
+	record DeviceAddedEventAvro {
+		string id;
+		DeviceTypeAvro type;
+	}
+
+	/**
+     * Событие удаления устройства
+     *
+     * @param id идентификатор удаляемого устройства
+     */
+	record DeviceRemovedEventAvro {
+		string id;
+	}
+
+	/**
+     * Условие для активации сценария
+     *
+     * @param sensor_id идентификатор сенсора, от которого зависит условие
+     * @param type тип условия
+     * @param operation операция сравнения
+     * @param value значение для сравнения (может быть null, int или boolean)
+     */
+	record ScenarioConditionAvro {
+		string sensor_id;
+		ConditionTypeAvro type;
+		ConditionOperationAvro operation;
+		union { null, int, boolean } value;
+	}
+
+	/**
+	 * Действие, выполняемое сценарием
+	 *
+	 * @param sensor_id идентификатор устройства, над которым выполняется действие
+	 * @param type тип действия
+	 * @param value значение для установки (опционально, по умолчанию null)
+	 */
+	record DeviceActionAvro {
+		string sensor_id;
+		ActionTypeAvro type;
+		int? value = null;
+	}
+
+	/**
+     * Событие добавления нового сценария автоматизации
+     *
+     * @param name название сценария
+     * @param conditions массив условий активации
+     * @param actions массив выполняемых действий
+     */
+	record ScenarioAddedEventAvro {
+		string name;
+		array<ScenarioConditionAvro> conditions;
+		array<DeviceActionAvro> actions;
+	}
+
+	/**
+	 * Событие удаления сценария
+	 *
+	 * @param name название удаляемого сценария
+	 */
+	record ScenarioRemovedEventAvro {
+		string name;
+	}
+
+	/**
+	 * Событие хаба управления
+	 *
+	 * <p>Содержит общую информацию о событии и полезную нагрузку одного из типов событий</p>
+	 *
+	 * @param hub_id идентификатор хаба
+	 * @param timestamp метка времени события
+	 * @param payload данные события (одно из событий управления)
+	 */
+	record HubEventAvro {
+		string hub_id;
+		timestamp_ms timestamp;
+		union {
+			DeviceAddedEventAvro,
+			DeviceRemovedEventAvro,
+			ScenarioAddedEventAvro,
+			ScenarioRemovedEventAvro
+		} payload;
+	}
 }
