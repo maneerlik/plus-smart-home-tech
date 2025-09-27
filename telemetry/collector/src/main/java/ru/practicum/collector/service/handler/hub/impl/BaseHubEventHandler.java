@@ -2,30 +2,36 @@ package ru.practicum.collector.service.handler.hub.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
-import ru.practicum.collector.model.hub.HubEvent;
-import ru.practicum.collector.model.hub.enums.HubEventType;
 import ru.practicum.collector.service.handler.EventProducer;
 import ru.practicum.collector.service.handler.hub.HubEventHandler;
+import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
+
+import java.time.Instant;
 
 @RequiredArgsConstructor
 public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implements HubEventHandler {
     protected final EventProducer eventProducer;
-    protected final HubEventType hubEventType;
+    protected final HubEventProto.PayloadCase hubEventType;
 
 
-    protected HubEventAvro mapToHubEventAvro(HubEvent event) {
+    protected HubEventAvro mapToHubEventAvro(HubEventProto event) {
+        Instant timestamp = Instant.ofEpochSecond(
+                event.getTimestamp().getSeconds(),
+                event.getTimestamp().getNanos()
+        );
+
         return HubEventAvro.newBuilder()
                 .setHubId(event.getHubId())
-                .setTimestamp(event.getTimestamp())
+                .setTimestamp(timestamp)
                 .setPayload(mapToAvro(event))
                 .build();
     }
 
-    protected abstract T mapToAvro(HubEvent event);
+    protected abstract T mapToAvro(HubEventProto event);
 
     @Override
-    public final HubEventType getEventType() {
+    public final HubEventProto.PayloadCase getEventType() {
         return hubEventType;
     }
 }
