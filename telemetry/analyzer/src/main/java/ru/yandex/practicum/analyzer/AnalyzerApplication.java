@@ -1,11 +1,11 @@
-package ru.yandex.practicum.aggregator;
+package ru.yandex.practicum.analyzer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Aggregator {
+public class AnalyzerApplication {
     public static void main( String[] args ) {
-        SpringApplication.run(Aggregator.class, args);
+        SpringApplication.run(AnalyzerApplication.class, args);
     }
 }

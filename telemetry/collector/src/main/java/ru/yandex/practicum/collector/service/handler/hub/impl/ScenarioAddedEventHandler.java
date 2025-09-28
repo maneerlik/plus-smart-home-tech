@@ -1,8 +1,8 @@
-package ru.practicum.collector.service.handler.hub.impl;
+package ru.yandex.practicum.collector.service.handler.hub.impl;
 
 import org.springframework.stereotype.Component;
-import ru.practicum.collector.mapper.AvroMapper;
-import ru.practicum.collector.service.handler.EventProducer;
+import ru.yandex.practicum.collector.mapper.AvroMapper;
+import ru.yandex.practicum.collector.service.handler.EventProducer;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioAddedEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;

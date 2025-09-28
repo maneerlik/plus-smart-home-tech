@@ -1,11 +1,11 @@
-package ru.practicum.collector.service.handler;
+package ru.yandex.practicum.collector.service.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import ru.practicum.collector.config.KafkaTopicsProperties;
+import ru.yandex.practicum.collector.config.KafkaTopicsProperties;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 

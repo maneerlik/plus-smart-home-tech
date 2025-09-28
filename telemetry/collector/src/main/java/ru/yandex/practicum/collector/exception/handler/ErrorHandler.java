@@ -1,11 +1,11 @@
-package ru.practicum.collector.exception.handler;
+package ru.yandex.practicum.collector.exception.handler;
 
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.collector.exception.ErrorResponse;
+import ru.yandex.practicum.collector.exception.ErrorResponse;
 
 import java.util.Objects;
 

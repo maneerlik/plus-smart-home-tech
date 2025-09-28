@@ -1,13 +1,13 @@
-package ru.practicum.collector.controller;
+package ru.yandex.practicum.collector.controller;
 
 import com.google.protobuf.Empty;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
-import ru.practicum.collector.exception.UnknownEventTypeException;
-import ru.practicum.collector.service.handler.hub.HubEventHandler;
-import ru.practicum.collector.service.handler.sensor.SensorEventHandler;
+import ru.yandex.practicum.collector.exception.UnknownEventTypeException;
+import ru.yandex.practicum.collector.service.handler.hub.HubEventHandler;
+import ru.yandex.practicum.collector.service.handler.sensor.SensorEventHandler;
 import ru.yandex.practicum.grpc.telemetry.collector.CollectorControllerGrpc;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;

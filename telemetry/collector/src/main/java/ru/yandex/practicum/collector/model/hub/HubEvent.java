@@ -1,4 +1,4 @@
-package ru.practicum.collector.model.hub;
+package ru.yandex.practicum.collector.model.hub;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.practicum.collector.model.hub.enums.HubEventType;
+import ru.yandex.practicum.collector.model.hub.enums.HubEventType;
 
 import java.time.Instant;
 

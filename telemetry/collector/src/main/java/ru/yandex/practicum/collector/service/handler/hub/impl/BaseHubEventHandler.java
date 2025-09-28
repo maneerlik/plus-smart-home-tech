@@ -1,9 +1,9 @@
-package ru.practicum.collector.service.handler.hub.impl;
+package ru.yandex.practicum.collector.service.handler.hub.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
-import ru.practicum.collector.service.handler.EventProducer;
-import ru.practicum.collector.service.handler.hub.HubEventHandler;
+import ru.yandex.practicum.collector.service.handler.EventProducer;
+import ru.yandex.practicum.collector.service.handler.hub.HubEventHandler;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 

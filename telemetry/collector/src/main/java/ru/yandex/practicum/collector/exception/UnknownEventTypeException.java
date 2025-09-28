@@ -1,4 +1,4 @@
-package ru.practicum.collector.exception;
+package ru.yandex.practicum.collector.exception;
 
 public class UnknownEventTypeException extends RuntimeException {
     public UnknownEventTypeException(String message) {

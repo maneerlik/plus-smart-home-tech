@@ -1,4 +1,4 @@
-package ru.practicum.collector.mapper;
+package ru.yandex.practicum.collector.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionProto;

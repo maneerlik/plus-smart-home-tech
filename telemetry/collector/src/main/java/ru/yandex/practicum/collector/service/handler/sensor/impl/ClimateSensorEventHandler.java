@@ -1,7 +1,7 @@
-package ru.practicum.collector.service.handler.sensor.impl;
+package ru.yandex.practicum.collector.service.handler.sensor.impl;
 
 import org.springframework.stereotype.Component;
-import ru.practicum.collector.service.handler.EventProducer;
+import ru.yandex.practicum.collector.service.handler.EventProducer;
 import ru.yandex.practicum.grpc.telemetry.event.ClimateSensorProto;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;

@@ -1,4 +1,4 @@
-package ru.practicum.collector.model.hub;
+package ru.yandex.practicum.collector.model.hub;
 
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

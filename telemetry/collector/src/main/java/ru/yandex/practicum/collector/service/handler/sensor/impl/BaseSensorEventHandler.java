@@ -1,9 +1,9 @@
-package ru.practicum.collector.service.handler.sensor.impl;
+package ru.yandex.practicum.collector.service.handler.sensor.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
-import ru.practicum.collector.service.handler.EventProducer;
-import ru.practicum.collector.service.handler.sensor.SensorEventHandler;
+import ru.yandex.practicum.collector.service.handler.EventProducer;
+import ru.yandex.practicum.collector.service.handler.sensor.SensorEventHandler;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 
