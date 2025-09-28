@@ -1,4 +1,4 @@
-package ru.yandex.practicum.config;
+package ru.practicum.aggregator.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

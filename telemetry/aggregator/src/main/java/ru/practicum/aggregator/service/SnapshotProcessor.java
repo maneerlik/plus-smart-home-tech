@@ -1,4 +1,4 @@
-package ru.yandex.practicum.service;
+package ru.practicum.aggregator.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +12,10 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.config.KafkaClient;
+import ru.practicum.aggregator.config.KafkaClient;
+import ru.practicum.aggregator.storage.SensorSnapshotStorage;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
-import ru.yandex.practicum.storage.SensorSnapshotStorage;
 
 import java.util.*;
 

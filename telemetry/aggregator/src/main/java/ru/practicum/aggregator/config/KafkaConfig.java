@@ -1,4 +1,4 @@
-package ru.yandex.practicum.config;
+package ru.practicum.aggregator.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
