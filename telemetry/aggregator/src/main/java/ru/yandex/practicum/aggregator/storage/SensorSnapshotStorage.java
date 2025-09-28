@@ -1,4 +1,4 @@
-package ru.practicum.aggregator.storage;
+package ru.yandex.practicum.aggregator.storage;
 
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;

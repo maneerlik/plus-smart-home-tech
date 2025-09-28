@@ -1,10 +1,10 @@
-package ru.practicum.aggregator.storage.impl;
+package ru.yandex.practicum.aggregator.storage.impl;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorStateAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
-import ru.practicum.aggregator.storage.SensorSnapshotStorage;
+import ru.yandex.practicum.aggregator.storage.SensorSnapshotStorage;
 
 import java.time.Instant;
 import java.util.HashMap;

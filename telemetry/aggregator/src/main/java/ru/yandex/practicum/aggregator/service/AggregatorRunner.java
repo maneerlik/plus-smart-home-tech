@@ -1,4 +1,4 @@
-package ru.practicum.aggregator.service;
+package ru.yandex.practicum.aggregator.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
