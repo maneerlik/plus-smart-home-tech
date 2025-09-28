@@ -33,7 +33,7 @@ public class KafkaConfig {
     @Value("${kafka.consumer.poll.timeout}")
     private long pollTimeout;
 
-    private KafkaTopicsProperties topicsProperties;
+    private final KafkaTopicsProperties topicsProperties;
 
     private Producer<String, SpecificRecordBase> kafkaProducer() {
         Properties config = new Properties();
