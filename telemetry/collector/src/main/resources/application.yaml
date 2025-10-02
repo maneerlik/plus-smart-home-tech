@@ -6,7 +6,7 @@ spring:
     bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: ru.practicum.kafka.serializer.GeneralAvroSerializer
+      value-serializer: ru.yandex.practicum.kafka.serializer.GeneralAvroSerializer
 
 kafka:
   topics:
@@ -15,6 +15,10 @@ kafka:
 
 server:
   port: 8080
+
+grpc:
+  server:
+    port: 59091
 
 logging:
   level:
