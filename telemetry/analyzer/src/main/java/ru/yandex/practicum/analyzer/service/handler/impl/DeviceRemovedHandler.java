@@ -2,7 +2,7 @@ package ru.yandex.practicum.analyzer.service.handler.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.analyzer.repository.SensorRepository;
+import ru.yandex.practicum.analyzer.service.SensorService;
 import ru.yandex.practicum.analyzer.service.handler.HubEventHandler;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceRemovedEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
@@ -10,7 +10,7 @@ import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 @Component
 @RequiredArgsConstructor
 public class DeviceRemovedHandler implements HubEventHandler<DeviceRemovedEventAvro> {
-    private final SensorRepository repository;
+    private final SensorService service;
 
 
     @Override
@@ -22,6 +22,6 @@ public class DeviceRemovedHandler implements HubEventHandler<DeviceRemovedEventA
     public void handle(HubEventAvro event) {
         DeviceRemovedEventAvro deviceRemovedEventAvro = (DeviceRemovedEventAvro) event.getPayload();
         String id = deviceRemovedEventAvro.getId();
-        if (repository.existsById(id)) repository.deleteById(id);
+        service.removeSensor(id);
     }
 }

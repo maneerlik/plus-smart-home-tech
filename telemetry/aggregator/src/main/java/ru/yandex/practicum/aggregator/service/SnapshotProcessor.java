@@ -107,8 +107,8 @@ public class SnapshotProcessor {
                         log.error("Error when sending a snapshot for the hub {}: {}",
                                 snapshot.getHubId(), ex.getMessage(), ex);
                     } else {
-                        log.info("Snapshot for the hub {} successfully submitted: partition={}, offset={}",
-                                snapshot.getHubId(), metadata.partition(), metadata.offset());
+                        log.info("Snapshot {} for the hub {} successfully submitted: partition={}, offset={}",
+                                snapshot, snapshot.getHubId(), metadata.partition(), metadata.offset());
                     }
                 });
             });

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.analyzer.mapper.entity.SensorMapper;
 import ru.yandex.practicum.analyzer.model.Sensor;
-import ru.yandex.practicum.analyzer.repository.SensorRepository;
+import ru.yandex.practicum.analyzer.service.SensorService;
 import ru.yandex.practicum.analyzer.service.handler.HubEventHandler;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceAddedEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
@@ -12,7 +12,7 @@ import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 @Component
 @RequiredArgsConstructor
 public class DeviceAddedHandler implements HubEventHandler<DeviceAddedEventAvro> {
-    private final SensorRepository repository;
+    private final SensorService service;
 
 
     @Override
@@ -24,6 +24,6 @@ public class DeviceAddedHandler implements HubEventHandler<DeviceAddedEventAvro>
     public void handle(HubEventAvro event) {
         DeviceAddedEventAvro deviceAddedEventAvro = (DeviceAddedEventAvro) event.getPayload();
         Sensor sensor = SensorMapper.toSensor(deviceAddedEventAvro, event.getHubId());
-        repository.save(sensor);
+        service.saveSensor(sensor);
     }
 }

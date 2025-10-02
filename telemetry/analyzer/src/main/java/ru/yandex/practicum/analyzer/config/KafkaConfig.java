@@ -67,12 +67,12 @@ public class KafkaConfig {
 
             @Override
             public Consumer<String, SpecificRecordBase> getConsumerSnapshot() {
-                return Objects.isNull(consumerHub) ? kafkaConsumerHub() : consumerHub;
+                return Objects.isNull(consumerSnapshot) ? kafkaConsumerSnapshot() : consumerSnapshot;
             }
 
             @Override
             public Consumer<String, SpecificRecordBase> getConsumerHub() {
-                return Objects.isNull(consumerSnapshot) ? kafkaConsumerSnapshot() : consumerSnapshot;
+                return Objects.isNull(consumerHub) ? kafkaConsumerHub() : consumerHub;
             }
 
             @Override

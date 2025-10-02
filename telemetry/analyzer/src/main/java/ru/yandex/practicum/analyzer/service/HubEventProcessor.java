@@ -32,6 +32,9 @@ public class HubEventProcessor implements Runnable {
     public void run() {
         Consumer<String, SpecificRecordBase> consumer = kafkaClient.getConsumerHub();
 
+        // Регистрация хука, в котором при завершении приложения будет вызван метод wakeup в отдельном потоке.
+        // Это приведёт к генерации WakeupException в методе poll. После этого работа консьюмера корректно
+        // завершится в блоке finally
         Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
         try {

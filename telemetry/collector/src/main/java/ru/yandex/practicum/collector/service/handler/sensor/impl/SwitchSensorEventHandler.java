@@ -9,7 +9,7 @@ import ru.yandex.practicum.kafka.telemetry.event.SwitchSensorAvro;
 @Component
 public class SwitchSensorEventHandler extends BaseSensorEventHandler<SwitchSensorAvro> {
     public SwitchSensorEventHandler(EventProducer eventProducer) {
-        super(eventProducer, SensorEventProto.PayloadCase.SWITCH_SENSOR);
+        super(eventProducer, SensorEventProto.PayloadCase.SWITCH_SENSOR_EVENT);
     }
 
 
@@ -20,7 +20,7 @@ public class SwitchSensorEventHandler extends BaseSensorEventHandler<SwitchSenso
 
     @Override
     protected SwitchSensorAvro mapToAvro(SensorEventProto event) {
-        SwitchSensorProto switchSensorEvent = event.getSwitchSensor();
+        SwitchSensorProto switchSensorEvent = event.getSwitchSensorEvent();
         return SwitchSensorAvro.newBuilder()
                 .setState(switchSensorEvent.getState())
                 .build();

@@ -9,7 +9,7 @@ import ru.yandex.practicum.kafka.telemetry.event.LightSensorAvro;
 @Component
 public class LightSensorEventHandler extends BaseSensorEventHandler<LightSensorAvro> {
     public LightSensorEventHandler(EventProducer eventProducer) {
-        super(eventProducer, SensorEventProto.PayloadCase.LIGHT_SENSOR);
+        super(eventProducer, SensorEventProto.PayloadCase.LIGHT_SENSOR_EVENT);
     }
 
 
@@ -20,7 +20,7 @@ public class LightSensorEventHandler extends BaseSensorEventHandler<LightSensorA
 
     @Override
     protected LightSensorAvro mapToAvro(SensorEventProto event) {
-        LightSensorProto lightSensorEvent = event.getLightSensor();
+        LightSensorProto lightSensorEvent = event.getLightSensorEvent();
         return LightSensorAvro.newBuilder()
                 .setLinkQuality(lightSensorEvent.getLinkQuality())
                 .setLuminosity(lightSensorEvent.getLuminosity())

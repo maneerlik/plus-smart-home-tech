@@ -40,10 +40,10 @@ public class InMemorySensorSnapshotStorage implements SensorSnapshotStorage {
         SensorStateAvro oldState = stateMap.get(sensorId);
 
         if (Objects.nonNull(oldState)) {
-            boolean isAfterState = eventTimestamp.isAfter(oldState.getTimestamp());
+            boolean isAfterOldState = oldState.getTimestamp().isAfter(eventTimestamp);
             boolean isEqualPayload = oldState.getData().equals(event.getPayload());
 
-            if (isAfterState || isEqualPayload) return Optional.empty();
+            if (isAfterOldState || isEqualPayload) return Optional.empty();
         }
 
         SensorStateAvro newState = new SensorStateAvro();

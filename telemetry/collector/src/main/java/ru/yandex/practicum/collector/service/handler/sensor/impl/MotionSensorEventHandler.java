@@ -9,7 +9,7 @@ import ru.yandex.practicum.kafka.telemetry.event.MotionSensorAvro;
 @Component
 public class MotionSensorEventHandler extends BaseSensorEventHandler<MotionSensorAvro> {
     public MotionSensorEventHandler(EventProducer eventProducer) {
-        super(eventProducer, SensorEventProto.PayloadCase.MOTION_SENSOR);
+        super(eventProducer, SensorEventProto.PayloadCase.MOTION_SENSOR_EVENT);
     }
 
 
@@ -20,7 +20,7 @@ public class MotionSensorEventHandler extends BaseSensorEventHandler<MotionSenso
 
     @Override
     protected MotionSensorAvro mapToAvro(SensorEventProto event) {
-        MotionSensorProto motionSensorEvent = event.getMotionSensor();
+        MotionSensorProto motionSensorEvent = event.getMotionSensorEvent();
         return MotionSensorAvro.newBuilder()
                 .setMotion(motionSensorEvent.getMotion())
                 .setLinkQuality(motionSensorEvent.getLinkQuality())
