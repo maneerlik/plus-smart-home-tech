@@ -35,31 +35,10 @@ public class KafkaConfig {
 
     private final KafkaTopicsProperties topicsProperties;
 
-    private KafkaConsumer<String, SpecificRecordBase> kafkaConsumerHub() {
-        Properties config = new Properties();
-
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-        config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, HubEventDeserializer.class.getCanonicalName());
-        config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupHub);
-
-        return new KafkaConsumer<>(config);
-    }
-
-    private KafkaConsumer<String, SpecificRecordBase> kafkaConsumerSnapshot() {
-        Properties config = new Properties();
-
-        config.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-        config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SnapshotsDeserializer.class.getCanonicalName());
-        config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupSnapshot);
-
-        return new KafkaConsumer<>(config);
-    }
 
     @Bean
     @Scope("prototype")
-    KafkaClient getClient() {
+    public KafkaClient getClient() {
         return new KafkaClient() {
             private Consumer<String, SpecificRecordBase> consumerHub;
             private Consumer<String, SpecificRecordBase> consumerSnapshot;
@@ -85,5 +64,27 @@ public class KafkaConfig {
                 return topicsProperties;
             }
         };
+    }
+
+    private KafkaConsumer<String, SpecificRecordBase> kafkaConsumerHub() {
+        Properties config = new Properties();
+
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
+        config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, HubEventDeserializer.class.getCanonicalName());
+        config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupHub);
+
+        return new KafkaConsumer<>(config);
+    }
+
+    private KafkaConsumer<String, SpecificRecordBase> kafkaConsumerSnapshot() {
+        Properties config = new Properties();
+
+        config.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
+        config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SnapshotsDeserializer.class.getCanonicalName());
+        config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupSnapshot);
+
+        return new KafkaConsumer<>(config);
     }
 }

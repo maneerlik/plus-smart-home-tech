@@ -35,30 +35,10 @@ public class KafkaConfig {
 
     private final KafkaTopicsProperties topicsProperties;
 
-    private Producer<String, SpecificRecordBase> kafkaProducer() {
-        Properties config = new Properties();
-
-        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GeneralAvroSerializer.class);
-
-        return new KafkaProducer<>(config);
-    }
-
-    private KafkaConsumer<String, SpecificRecordBase> kafkaConsumer() {
-        Properties config = new Properties();
-
-        config.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
-        config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SensorEventDeserializer.class.getCanonicalName());
-        config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, group);
-
-        return new KafkaConsumer<>(config);
-    }
 
     @Bean
     @Scope("prototype")
-    KafkaClient getClient() {
+    public KafkaClient getClient() {
         return new KafkaClient() {
             private Consumer<String, SpecificRecordBase> consumer;
             private Producer<String, SpecificRecordBase> producer;
@@ -84,5 +64,26 @@ public class KafkaConfig {
                 return topicsProperties;
             }
         };
+    }
+
+    private Producer<String, SpecificRecordBase> kafkaProducer() {
+        Properties config = new Properties();
+
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GeneralAvroSerializer.class);
+
+        return new KafkaProducer<>(config);
+    }
+
+    private KafkaConsumer<String, SpecificRecordBase> kafkaConsumer() {
+        Properties config = new Properties();
+
+        config.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getCanonicalName());
+        config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SensorEventDeserializer.class.getCanonicalName());
+        config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, group);
+
+        return new KafkaConsumer<>(config);
     }
 }

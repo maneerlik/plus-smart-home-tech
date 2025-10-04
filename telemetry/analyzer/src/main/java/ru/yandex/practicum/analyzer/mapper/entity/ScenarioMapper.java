@@ -1,6 +1,5 @@
 package ru.yandex.practicum.analyzer.mapper.entity;
 
-import org.springframework.stereotype.Component;
 import ru.yandex.practicum.analyzer.model.Action;
 import ru.yandex.practicum.analyzer.model.Condition;
 import ru.yandex.practicum.analyzer.model.Scenario;
@@ -15,8 +14,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
-public class ScenarioMapper {
+public final class ScenarioMapper {
+    /**
+     * Don't let anyone instantiate this class.
+     */
+    private ScenarioMapper() {}
+
+
     public static Scenario toScenario(String hubId, ScenarioAddedEventAvro avro) {
         Scenario scenario = new Scenario();
 
