@@ -1,0 +1,77 @@
+/**
+ * Протокол снапшотов состояний датчиков в формате Avro
+ *
+ * <p>Определяет структуру снапшота - агрегированного состояния всех датчиков,
+ * подключенных к одному хабу, на определенный момент времени</p>
+ *
+ * <h2>Состав снапшота:</h2>
+ * <ul>
+ *   <li>Идентификатор хаба</li>
+ *   <li>Метка времени формирования снапшота</li>
+ *   <li>Ассоциативный массив состояний датчиков, ключ — идентификатор датчика, значение — последнее известное состояние</li>
+ * </ul>
+ *
+ * <h2>Массив состояний:</h2>
+ * <p>Каждое состояние датчика содержит:
+ * <ul>
+ *   <li>Метку времени получения показаний</li>
+ *   <li>Полезную нагрузку одного из типов датчиков, определённых в {@link ru.yandex.practicum.kafka.telemetry.event.SensorEventProtocol}:
+ *     <ul>
+ *       <li>{@link ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro} - климатический датчик</li>
+ *       <li>{@link ru.yandex.practicum.kafka.telemetry.event.LightSensorAvro} - датчик освещенности</li>
+ *       <li>{@link ru.yandex.practicum.kafka.telemetry.event.MotionSensorAvro} - датчик движения</li>
+ *       <li>{@link ru.yandex.practicum.kafka.telemetry.event.SwitchSensorAvro} - датчик переключателя</li>
+ *       <li>{@link ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro} - температурный датчик</li>
+ *     </ul>
+ *   </li>
+ * </ul>
+ */
+
+@namespace("ru.yandex.practicum.kafka.telemetry.event")
+protocol SensorsSnapshotProtocol {
+
+	// импорт схем датчиков
+	import idl "SensorEvent.avdl";
+
+	/**
+	 * Снапшот состояний датчиков, подключённых к хабу
+	 *
+	 * <p>Представляет собой моментальный снимок всех известных состояний датчиков,
+	 * ассоциированных с конкретным хабом, на момент {@code timestamp}</p>
+	 *
+	 * @param hubId идентификатор хаба, к которому подключены датчики
+	 * @param timestamp метка времени формирования снапшота (в миллисекундах с Unix epoch)
+	 * @param sensorsState ассоциативный массив состояний датчиков, ключ - уникальный идентификатор датчика (string),
+	 * значение - объект {@link SensorStateAvro}, содержащий время и данные показаний
+	 */
+	record SensorsSnapshotAvro {
+		string hubId;
+		timestamp_ms timestamp;
+		map<SensorStateAvro> sensorsState;
+	}
+
+	/**
+	 * Состояние отдельного датчика
+	 *
+	 * <p>Содержит временную метку получения показаний и сами показания, представленные в виде объединения (union)
+	 * возможных типов датчиков</p>
+	 *
+	 * @param timestamp метка времени, когда были получены показания датчика (в миллисекундах с Unix epoch)
+	 * @param data полезная нагрузка - данные конкретного типа датчика:
+	 * 		{@link ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro},
+	 * 		{@link ru.yandex.practicum.kafka.telemetry.event.LightSensorAvro},
+	 * 		{@link ru.yandex.practicum.kafka.telemetry.event.MotionSensorAvro},
+	 * 		{@link ru.yandex.practicum.kafka.telemetry.event.SwitchSensorAvro},
+	 * 		{@link ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro}
+	 */
+	record SensorStateAvro {
+		timestamp_ms timestamp;
+		union {
+			ClimateSensorAvro,
+			LightSensorAvro,
+			MotionSensorAvro,
+			SwitchSensorAvro,
+			TemperatureSensorAvro
+		} data;
+	}
+}
