@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations:
+            - classpath:config/telemetry/{application}    # сначала конфиг ищется здесь
+            - classpath:config/commerce/{application}     # во вторую очередь здесь и т.д.
+
+server:
+  port: 0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

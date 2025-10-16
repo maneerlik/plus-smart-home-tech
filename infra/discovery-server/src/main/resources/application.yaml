@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false   # отключает автоматическую регистрацию приложения в сервисе discovery как сервиса
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+server:
+  port: 8761
