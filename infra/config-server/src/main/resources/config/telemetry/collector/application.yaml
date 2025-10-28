@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: collector
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: ru.yandex.practicum.kafka.serializer.GeneralAvroSerializer
+
+kafka:
+  topics:
+    telemetrySensorsV1: telemetry.sensors.v1
+    telemetryHubsV1: telemetry.hubs.v1
+
+server:
+  port: 8080
+
+grpc:
+  server:
+    port: 59091
+
+logging:
+  level:
+    org.springframework.kafka: DEBUG
