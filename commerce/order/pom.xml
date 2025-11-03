@@ -7,11 +7,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shopping-cart</artifactId>
+    <artifactId>order</artifactId>
 
     <dependencies>
         <!-- Web starter for building web applications and RESTful services: adds Spring MVC, embedded Tomcat,
-             Jackson for JSON processing, and validation support on top of the core Spring Boot features -->
+                     Jackson for JSON processing, and validation support on top of the core Spring Boot features -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

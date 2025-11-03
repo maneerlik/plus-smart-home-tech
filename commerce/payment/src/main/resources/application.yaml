@@ -1,19 +1,18 @@
 spring:
   application:
-    name: config-server
-  profiles:
-    active: native
+    name: payment
+  config:
+    import: "configserver:"
+
   cloud:
     config:
-      server:
-        native:
-          searchLocations:
-            - classpath:config/telemetry/{application}    # сначала конфиг ищется здесь
-            - classpath:config/commerce/{application}     # во вторую очередь здесь и т.д.
-            - classpath:config/infra/{application}
-
-server:
-  port: 0
+      discovery:
+        enabled: true           # клиент должен использовать службу обнаружения (Eureka) для поиска сервера конфигураци
+        serviceId: config-server
+      fail-fast: true           # если сервер конфигурации недоступен, сразу "падать"
+      retry:
+        useRandomPolicy: true   # для повторных попыток использовать стратегию random exponential backoff. Каждая последующая попытка переподключения совершается через всё больший случайный интервал времени
+        max-interval: 6000      # максимально возможный интервал между попытками подключения
 
 eureka:
   client:

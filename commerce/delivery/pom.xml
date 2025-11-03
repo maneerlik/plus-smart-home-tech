@@ -7,7 +7,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shopping-cart</artifactId>
+    <artifactId>delivery</artifactId>
 
     <dependencies>
         <!-- Web starter for building web applications and RESTful services: adds Spring MVC, embedded Tomcat,

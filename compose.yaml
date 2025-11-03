@@ -16,6 +16,7 @@ services:
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
       KAFKA_LISTENERS: 'PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092'
       CLUSTER_ID: 'K0EA9p0yEe6MkAAAAkKsEg'
+    profiles: ["telemetry"]
 
   kafka-init-topics:
     image: confluentinc/confluent-local:7.4.3
@@ -33,7 +34,9 @@ services:
                              --partitions 1 --replication-factor 1 --if-not-exists \
                              --bootstrap-server kafka:29092'"
     init: true
+    profiles: ["telemetry"]
 
+  # 0. DBs
   db:
     image: postgres:16.1
     container_name: smart-home-db
@@ -50,3 +53,33 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
+    profiles: ["commerce"]
+
+  # 1. Discovery Server (Eureka)
+  discovery-server:
+    image: discovery-server:latest        # имя образа, который будет создан или использован. Если есть build, образ собирается локально, а не скачивается из Docker Hub. C тегом :latest
+    build:
+      context: ./infra/discovery-server   # где искать исходники: в пакете ./infra/discovery-server
+      dockerfile: Dockerfile              # как собирать образ: используя файл Dockerfile, в этой папке
+    ports:
+      - "8761:8761"                       # пробросить порт (порт на компьютере (localhost):порт внутри контейнера)
+      - "5005:5005"                       # порт для дебага
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:                          # переменные окружения внутри контейнера
+                                          # > - все строки ниже объединить в одну строку с пробелами вместо переносов
+                                          # -agentlib:jdwp - настройка удалённой отладки Java (JDWP - Java Debug Wire Protocol).
+                                          # Позволяет подключить IDE к работающему контейнеру и ставить breakpoints, как будто
+                                          # приложение запущено локально.
+                                          # -Duser.timezone - устанавливает часовой пояс по умолчанию для всего приложения
+      JAVA_OPTS: >                        
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 
+        -Duser.timezone=Europe/Moscow
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s                       # проверять каждые 10 секунд
+      timeout: 5s                         # ждать ответа не дольше 5 секунд
+      retries: 3                          # сделать до 3 попыток, прежде чем считать сервис "нездоровым"
+    restart: unless-stopped               # перезапускать, если контейнер не был остановлен вручную
+    profiles: ["commerce"]                # запуск по профилю 'docker-compose --profile infra --profile commerce up -d'

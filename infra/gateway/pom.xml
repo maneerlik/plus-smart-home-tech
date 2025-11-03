@@ -3,18 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.yandex.practicum</groupId>
-        <artifactId>commerce</artifactId>
+        <artifactId>infra</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shopping-cart</artifactId>
+    <artifactId>gateway</artifactId>
 
     <dependencies>
-        <!-- Web starter for building web applications and RESTful services: adds Spring MVC, embedded Tomcat,
-             Jackson for JSON processing, and validation support on top of the core Spring Boot features -->
+        <!-- Spring Cloud Gateway -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
         <!-- Spring Cloud Config (Externalized Configuration) -->
@@ -33,43 +32,10 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!-- Feign-client -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <!-- jpa -->
+        <!-- Adds Spring Boot Actuator for monitoring and management endpoints (health, metrics, info) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <!-- liquibase -->
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
-
-        <!-- db -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- Project Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Local dependencies -->
-        <dependency>
-            <groupId>ru.yandex.practicum</groupId>
-            <artifactId>interaction-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 
