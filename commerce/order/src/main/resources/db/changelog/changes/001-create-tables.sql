@@ -13,10 +13,12 @@ CREATE TABLE IF NOT EXISTS address
 
 CREATE TABLE IF NOT EXISTS orders
 (
-    id                  UUID PRIMARY KEY NOT NULL,
-    username            VARCHAR(255)     NOT NULL,
-    state               VARCHAR(50)      NOT NULL,
-    shopping_cart_id    UUID             NOT NULL,
+    id                  UUID PRIMARY KEY                 NOT NULL,
+    username            VARCHAR(255)                     NOT NULL,
+    state               VARCHAR(50) CHECK (state IN ('NEW', 'ON_PAYMENT', 'ON_DELIVERY', 'DONE', 'DELIVERED', 'ASSEMBLED',
+                                            'PAID', 'COMPLETED', 'DELIVERY_FAILED', 'ASSEMBLY_FAILED', 'PAYMENT_FAILED',
+                                            'PRODUCT_RETURNED', 'CANCELED')) NOT NULL,
+    shopping_cart_id    UUID                             NOT NULL,
     payment_id          UUID,
     delivery_id         UUID,
     delivery_weight     DOUBLE PRECISION,
