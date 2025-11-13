@@ -1,6 +1,5 @@
 package ru.yandex.practicum.contract;
 
-import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -10,6 +9,9 @@ import ru.yandex.practicum.dto.ProductPageDto;
 import ru.yandex.practicum.enums.ProductCategory;
 import ru.yandex.practicum.enums.QuantityState;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @FeignClient(name = "shopping-store", path = "/api/v1/shopping-store")
@@ -21,10 +23,10 @@ public interface ShoppingStoreClient {
     );
 
     @PutMapping
-    ProductDto addProduct(@RequestBody @Valid ProductDto product);
+    ProductDto addProduct(@RequestBody ProductDto product);
 
     @PostMapping
-    ProductDto updateProduct(@RequestBody @Valid ProductDto productDto);
+    ProductDto updateProduct(@RequestBody ProductDto productDto);
 
     @PostMapping("/removeProductFromStore")
     boolean removeProduct(@RequestBody UUID productId);
@@ -37,4 +39,7 @@ public interface ShoppingStoreClient {
 
     @GetMapping("/{productId}")
     ProductDto getProductById(@PathVariable UUID productId);
+
+    @GetMapping("/price")
+    Map<UUID, BigDecimal> getProductsPrice(@RequestBody List<UUID> productsIds);
 }

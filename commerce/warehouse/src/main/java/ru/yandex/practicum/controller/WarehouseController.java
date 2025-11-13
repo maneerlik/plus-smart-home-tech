@@ -8,9 +8,14 @@ import ru.yandex.practicum.dto.AddressDto;
 import ru.yandex.practicum.dto.BookedProductsDto;
 import ru.yandex.practicum.dto.ShoppingCartDto;
 import ru.yandex.practicum.dto.in.AddProductToWarehouseRequest;
+import ru.yandex.practicum.dto.in.AssemblyProductsForOrderRequest;
 import ru.yandex.practicum.dto.in.NewProductInWarehouseRequest;
+import ru.yandex.practicum.dto.in.ShippedToDeliveryRequest;
 import ru.yandex.practicum.exception.ProductInShoppingCartLowQuantityInWarehouseException;
 import ru.yandex.practicum.service.WarehouseService;
+
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,5 +42,23 @@ public class WarehouseController implements WarehouseClient {
     @GetMapping("/address")
     public AddressDto getAddress() {
         return service.getAddress();
+    }
+
+    @Override
+    @PostMapping("/return")
+    public void returnBookedProducts(@RequestBody Map<UUID, Integer> products) {
+        service.returnBookedProducts(products);
+    }
+
+    @Override
+    @GetMapping("/assembly")
+    public BookedProductsDto assemblyProducts(@RequestBody AssemblyProductsForOrderRequest request) {
+        return service.assemblyProducts(request);
+    }
+
+    @Override
+    @PostMapping("/shipped")
+    public void shipProducts(@RequestBody ShippedToDeliveryRequest request) {
+        service.shipProducts(request);
     }
 }

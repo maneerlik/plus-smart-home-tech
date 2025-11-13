@@ -13,3 +13,12 @@ eureka:
 
 server:
   port: 8761
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Включает все эндпоинты Actuator (в т.ч. gateway, health, metrics и т.д.)
+  endpoint:
+    health:
+      enabled: true   # Явно включает эндпоинт /actuator/health (по умолчанию true, но лучше указать)
